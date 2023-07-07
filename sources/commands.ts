@@ -227,8 +227,7 @@ export const commands = new Proxy<{
           const { value } = await kv.get<GuildConfig>(["guild", guild_id]);
           if (!value) {
             return {
-              content: emojis.cross +
-                format` Something went wrong, value: ${value}`,
+              content: `${emojis.cross} There is not any data yet!`,
             };
           }
           return {
@@ -241,7 +240,7 @@ export const commands = new Proxy<{
 
           if ((<string> address.value).indexOf("xdc") !== 0) {
             return {
-              content: emojis.refresh + `Adresses must start with ${"xdc"}!`,
+              content: emojis.refresh + format`Adresses must start with ${"xdc"}!`,
             };
           }
 
