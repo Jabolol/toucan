@@ -1,0 +1,11 @@
+{
+  "lock": false,
+  "tasks": {
+    "dev": "deno run --watch --unstable sources/main.ts"
+  },
+  "imports": {
+    "$std/": "https://deno.land/std@0.192.0/",
+    "nacl": "https://cdn.skypack.dev/tweetnacl?dts",
+    "discordeno": "https://deno.land/x/discordeno@18.0.1/mod.ts"
+  }
+}
