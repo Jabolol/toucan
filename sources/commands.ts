@@ -53,7 +53,7 @@ export const commands = new Proxy<{
               body: JSON.stringify(
                 {
                   content: emojis.check +
-                    format` Sent to ${guild_id}\n\`\`\`json\n${
+                    ` Sent to ${guild_id}\n\`\`\`json\n${
                       JSON.stringify(history, null, 2)
                     }\`\`\``,
                 } satisfies CreateMessage,
@@ -63,11 +63,7 @@ export const commands = new Proxy<{
         }
       }
 
-      return {
-        content: `${emojis.check}\n\`\`\`json\n${
-          JSON.stringify(data, null, 2)
-        }\`\`\``,
-      };
+      return { content: `${emojis.check} Sent correctly.` };
     },
     follow: async ({ data, channel_id, guild_id }) => {
       const [action, address] = data?.options!;
