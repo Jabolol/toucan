@@ -13,8 +13,7 @@ DONE:
 
 TODO: 3. Data display in chart
 
-- /data <days> <type ==> XRC20/XRC721> <events ==>
-  transfer/approval/approvalforall/all> <address>
+- /plot <days> <type ==> XRC20/XRC721> <address>
 
 4. Data export (csv, json, etc)
    - /export <address> <events ==> transfer/approval/approvalforall/all> <value
