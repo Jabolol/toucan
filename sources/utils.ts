@@ -4,8 +4,8 @@ import {
   Interface,
   InterfaceAbi,
 } from "ethers";
-import { renderChart } from "$fresh_charts/mod.ts";
 import { ChartColors, transparentize } from "$fresh_charts/utils.ts";
+import { chart as makeChart } from "$fresh_charts/core.ts";
 import {
   AbiType,
   type ContractResponse,
@@ -18,6 +18,7 @@ import {
 } from "./types.ts";
 import { DEFAULT_ABI_XRC20, DEFAULT_ABI_XRC721, json } from "./misc.ts";
 import { getPastEvents } from "./methods.ts";
+import { render } from "resvg";
 
 export const getAbi = async (
   address: string,
@@ -153,7 +154,7 @@ export const createChart = (
     data.map(({ blockNumber }) => blockNumber),
   );
 
-  return renderChart({
+  return render(makeChart({
     type: "line",
     data: {
       labels: Array.from({ length: days }, (_, i) => "" + (i + 1)),
@@ -170,7 +171,7 @@ export const createChart = (
     options: {
       devicePixelRatio: 1,
     },
-  });
+  }));
 };
 
 export const chart = async (url: URL) => {
@@ -194,17 +195,22 @@ export const chart = async (url: URL) => {
     return json({ error: "Invalid days" }, { status: 400 });
   }
 
-  return createChart(
-    await getPastEvents(
-      address,
-      +type,
-      [["Transfer", "Approval"], [
-        "Transfer",
-        "Approval",
-        "ApprovalForAll",
-      ]][+type],
+  return new Response(
+    await createChart(
+      await getPastEvents(
+        address,
+        +type,
+        [["Transfer", "Approval"], [
+          "Transfer",
+          "Approval",
+          "ApprovalForAll",
+        ]][+type],
+        +days,
+      ),
       +days,
     ),
-    +days,
+    {
+      headers: { "Content-Type": "image/png" },
+    },
   );
 };
