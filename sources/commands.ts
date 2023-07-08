@@ -60,6 +60,13 @@ export const commands = new Proxy<{
           `${emojis.bot} Hi ${name.value} -> \`${versionstamp}\`\n\`\`\`json\n${
             JSON.stringify(value, null, 2)
           }\`\`\``,
+        embeds: [{
+          video: {
+            url: "https://nftfiles.primeport.xyz/aiku/videos/21-fall.mp4",
+            width: 400,
+            height: 400,
+          },
+        }],
       };
     },
     follow: async ({ data, channel_id, guild_id }) => {
@@ -416,15 +423,19 @@ export const commands = new Proxy<{
             url: metadata.tokenData.TokenURIInfo,
             description:
               `\n\`\`\`ini\n${metadata.tokenData.description}\`\`\`\n\`\`\`json\n${
-                JSON.stringify({
-                  [
-                    metadata.tokenData.image.includes("mp4")
-                      ? "video"
-                      : "image"
-                  ]: {
-                    url: metadata.tokenData.image,
+                JSON.stringify(
+                  {
+                    [
+                      metadata.tokenData.image.includes("mp4")
+                        ? "video"
+                        : "image"
+                    ]: {
+                      url: metadata.tokenData.image,
+                    },
                   },
-                }, null, 2)
+                  null,
+                  2,
+                )
               }\`\`\``,
             thumbnail: {
               url: metadata.tokenData.image_thumbnail,
