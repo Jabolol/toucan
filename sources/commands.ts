@@ -11,8 +11,9 @@ import {
   NFTResponse,
 } from "./types.ts";
 import { getPastEvents } from "./methods.ts";
+import { poll } from "./utils.ts";
 
-const kv = await Deno.openKv();
+export const kv = await Deno.openKv();
 
 export const commands = new Proxy<{
   [k: string]: (
@@ -22,44 +23,11 @@ export const commands = new Proxy<{
     | Promise<DiscordInteractionResponse["data"]>;
 }>(
   {
-    hello: async ({ guild_id, channel_id, data }) => {
-      const [name] = data?.options!;
-
-      if (!guild_id || !channel_id) {
-        return {
-          content: `${emojis.refresh} You can't run this on direct messages`,
-        };
-      }
-
-      const { value, versionstamp } = await kv.get<ContractConfig>([
-        `config:${guild_id}`,
-        channel_id!,
-      ]);
-
-      const { ok } = await kv.set(
-        [`config:${guild_id}`, channel_id!],
-        {
-          address: value?.address || "example",
-          subs: value?.subs || [{
-            guild_id,
-            channel_id,
-            events: [EventTypes.Transfer],
-            updatedAt: new Date(),
-          }],
-        } satisfies ContractConfig,
-      );
-
-      if (!ok) {
-        return {
-          content: emojis.danger + format` Couldn't save the config, ok: ${ok}`,
-        };
-      }
-
+    hello: async () => {
       return {
-        content:
-          `${emojis.bot} Hi ${name.value} -> \`${versionstamp}\`\n\`\`\`json\n${
-            JSON.stringify(value, null, 2)
-          }\`\`\``,
+        content: `${emojis.check}\n\`\`\`json\n${
+          JSON.stringify(await poll(), null, 2)
+        }\`\`\``,
       };
     },
     follow: async ({ data, channel_id, guild_id }) => {
