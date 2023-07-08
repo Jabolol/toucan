@@ -190,3 +190,28 @@ export type PastEvents<T extends AbiType> = {
   transactionHash: string;
   transactionIndex: number;
 }[];
+
+export type NFTResponse = {
+  _id: string;
+  token: string;
+  tokenId: number;
+  createdAt: string;
+  holder: string;
+  updatedAt: string;
+  tokenData: {
+    name: string;
+    description: string;
+    image: string;
+    image_thumbnail: string;
+    attributes: {
+      value: string;
+      trait_type: string;
+    }[];
+    TokenURIInfo: string;
+  };
+  tokenDescription: string;
+  tokenImage: string;
+  tokenName: string;
+  tokenURI: string;
+  id: string;
+};
