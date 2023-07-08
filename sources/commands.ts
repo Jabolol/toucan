@@ -327,17 +327,9 @@ export const commands = new Proxy<{
       ] = data?.options!;
 
       return {
-        embeds: [{
-          title: "Plot",
-          description: `${
-            Deno.env.get("TOUCAN_URL")
-          }/chart?address=${address}&type=${type}&days=${days}`,
-          image: {
-            url: `${
-              Deno.env.get("TOUCAN_URL")
-            }/chart?address=${address}&type=${type}&days=${days}`,
-          },
-        }],
+        content: `${
+          Deno.env.get("TOUCAN_URL")
+        }/chart?address=${address}&type=${type}&days=${days}`,
       };
     },
   },
