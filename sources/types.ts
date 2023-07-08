@@ -30,6 +30,11 @@ export enum EventTypes {
   All,
 }
 
+export enum AbiType {
+  XRC_20,
+  XRC_721,
+}
+
 type DiscordInfo = {
   updatedAt: Date;
   guild_id: string;
@@ -100,3 +105,70 @@ export type PossibleEvents =
   | XRC20Approval
   | XRC721Approval
   | XRC721ApprovalForAll;
+
+export type ContractEvent = {
+  provider: never;
+  transactionHash: string;
+  blockHash: string;
+  blockNumber: number;
+  removed: boolean;
+  address: string;
+  data: string;
+  topics: [string, string, string];
+  index: number;
+  transactionIndex: number;
+  interface: {
+    fragments: {
+      type: string;
+      inputs: {
+        type: string;
+        inputs: {
+          name: string;
+          type: string;
+          baseType: string;
+          indexed: boolean;
+          components: unknown;
+          arrayLength: unknown;
+          arrayChildren: unknown;
+        }[];
+        name: string;
+        anonymous?: boolean;
+        constant?: boolean;
+        outputs?: unknown;
+        stateMutability?: string;
+        payable?: boolean;
+        gas: unknown;
+      }[];
+      name: string;
+      anonymous?: boolean;
+      constant?: boolean;
+      outputs?: unknown;
+      stateMutability?: string;
+      payable?: boolean;
+      gas: unknown;
+    }[];
+    deploy: {
+      type: string;
+      inputs: unknown;
+      payable: boolean;
+      gas: unknown;
+    };
+    fallback: unknown;
+    receive: boolean;
+  };
+  fragment: {
+    type: string;
+    inputs: {
+      name: string;
+      type: string;
+      baseType: string;
+      indexed: boolean;
+      components: unknown;
+      arrayLength: unknown;
+      arrayChildren: unknown;
+    }[];
+    name: string;
+    anonymous: boolean;
+  };
+  args: [string, string, number];
+};
