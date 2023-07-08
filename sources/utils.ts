@@ -16,7 +16,8 @@ import {
   type XRC721ApprovalForAll,
   type XRC721Transfer,
 } from "./types.ts";
-import { DEFAULT_ABI_XRC20, DEFAULT_ABI_XRC721 } from "./misc.ts";
+import { DEFAULT_ABI_XRC20, DEFAULT_ABI_XRC721, json } from "./misc.ts";
+import { getPastEvents } from "./methods.ts";
 
 export const getAbi = async (
   address: string,
@@ -144,7 +145,10 @@ const countOccurrences = (array: number[], days: number): number[] => {
   return occurrences;
 };
 
-export const createChart = (data: (ethers.Log | ethers.EventLog)[], days: number) => {
+export const createChart = (
+  data: (ethers.Log | ethers.EventLog)[],
+  days: number,
+) => {
   const blockDays = calculateOffsetInDays(
     data.map(({ blockNumber }) => blockNumber),
   );
@@ -167,4 +171,40 @@ export const createChart = (data: (ethers.Log | ethers.EventLog)[], days: number
       devicePixelRatio: 1,
     },
   });
+};
+
+export const chart = async (url: URL) => {
+  const { address, type, days } = Object.fromEntries(
+    url.searchParams,
+  ) as Partial<{
+    address: string;
+    type: string;
+    days: string;
+  }>;
+
+  if (!address || address.length !== 43 || address.indexOf("xdc") !== 0) {
+    return json({ error: "Invalid address" }, { status: 400 });
+  }
+
+  if (!type || isNaN(+type) || !(+type in [0, 1])) {
+    return json({ error: "Invalid type" }, { status: 400 });
+  }
+
+  if (!days || isNaN(+days) || +days < 0 || +days > 365 * 3) {
+    return json({ error: "Invalid days" }, { status: 400 });
+  }
+
+  return createChart(
+    await getPastEvents(
+      address,
+      +type,
+      [["Transfer", "Approval"], [
+        "Transfer",
+        "Approval",
+        "ApprovalForAll",
+      ]][+type],
+      +days,
+    ),
+    +days,
+  );
 };
