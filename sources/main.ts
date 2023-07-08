@@ -1,3 +1,5 @@
+/// <reference lib="deno.unstable" />
+
 import "$std/dotenv/load.ts";
 import { blue } from "$std/fmt/colors.ts";
 import { serve } from "$std/http/server.ts";
