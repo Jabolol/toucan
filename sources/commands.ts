@@ -409,8 +409,7 @@ export const commands = new Proxy<{
           {
             title: `${metadata.tokenName}`,
             url: metadata.tokenData.TokenURIInfo,
-            description:
-              `> Owned by \`${metadata.holder}\`\n\`\`\`ini\n${metadata.tokenData.description}\`\`\``,
+            description: `\n\`\`\`ini\n${metadata.tokenData.description}\`\`\``,
             thumbnail: {
               url: metadata.tokenData.image_thumbnail,
             },
