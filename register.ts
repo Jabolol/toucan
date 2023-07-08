@@ -191,6 +191,26 @@ export const commands = [
     }],
     dm_permission: false,
   },
+  {
+    name: "nft",
+    description: "Get NFT information by its id",
+    options: [
+      {
+        name: "token_id",
+        description: "The id of the token",
+        type: 3,
+        required: true,
+      },
+      {
+        name: "address",
+        description: "The address of the smart contract",
+        type: 3,
+        required: true,
+        min_length: 43,
+        max_length: 43,
+      },
+    ],
+  },
 ];
 
 const URL = `https://discord.com/api/v10/applications/${
