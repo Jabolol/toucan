@@ -19,6 +19,7 @@ import {
 import { DEFAULT_ABI_XRC20, DEFAULT_ABI_XRC721, json } from "./misc.ts";
 import { getPastEvents } from "./methods.ts";
 import { render } from "resvg";
+import { type XmlElement } from "json2xml";
 
 export const getAbi = async (
   address: string,
@@ -213,4 +214,36 @@ export const chart = async (url: URL) => {
       headers: { "Content-Type": "image/png" },
     },
   );
+};
+
+export const convertToXmlElement = <T extends { [key: string]: unknown }>(
+  obj: T,
+  elementName: string,
+): XmlElement => {
+  const element: XmlElement = {
+    _name: elementName,
+    _attrs: {},
+    _content: [],
+  };
+
+  Object.entries(obj).forEach(([key, value]) => {
+    if (typeof value === "object") {
+      if (Array.isArray(value)) {
+        const childElements = value.map((item) =>
+          convertToXmlElement(item, key)
+        );
+        (<XmlElement[]> element._content).push(...childElements);
+      } else {
+        const childElement = convertToXmlElement(
+          <{ [k: string]: unknown }> value!,
+          key,
+        );
+        (<XmlElement[]> element._content).push(childElement);
+      }
+    } else {
+      (<{ [k: string]: unknown }> element._attrs)[key] = value;
+    }
+  });
+
+  return element;
 };
