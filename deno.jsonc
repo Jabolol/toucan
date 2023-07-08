@@ -10,7 +10,7 @@
     "$fresh_charts/": "https://deno.land/x/fresh_charts@0.2.2/",
     "ethers": "https://esm.sh/ethers@6.6.2",
     "resvg": "https://deno.land/x/resvg_wasm@0.2.0/mod.ts",
-    "converter": "https://deno.land/x/data_format_converter@v1.2.0/mod.ts",
-    "json2yaml": "https://deno.land/x/json2yaml@v1.0.1/mod.ts"
+    "json2xml": "https://esm.sh/jstoxml@3.2.7",
+    "json2yaml": "https://esm.sh/json2yaml@1.0.0"
   }
 }
