@@ -328,10 +328,10 @@ export const commands = new Proxy<{
 
       return {
         embeds: [{
-          title: "Hello",
-          description: `\`\`\`json\n${
-            JSON.stringify({ hello: "world" }, null, 2)
-          }\`\`\``,
+          title: "Plot",
+          description: `${
+            Deno.env.get("TOUCAN_URL")
+          }/chart?address=${address}&type=${type}&days=${days}`,
           image: {
             url: `${
               Deno.env.get("TOUCAN_URL")
