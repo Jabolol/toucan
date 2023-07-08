@@ -19,11 +19,9 @@ DONE:
    - /export <address> <events ==> transfer/approval/approvalforall/all> <value
      ==> csv/json>
 
-TODO:
-
 5. NFT metadata explorer
    - /nft <token_id> <address>
 
-6. Periodic notificatiosn
+TODO:
 
-7. Real notifications
+6. Notifications
