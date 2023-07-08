@@ -8,9 +8,9 @@ import {
   type ContractConfig,
   EventTypes,
   type GuildConfig,
+  NFTResponse,
 } from "./types.ts";
 import { getPastEvents } from "./methods.ts";
-import { flattenObject } from "./utils.ts";
 
 const kv = await Deno.openKv();
 
@@ -402,12 +402,25 @@ export const commands = new Proxy<{
       const req = await fetch(
         `https://xdc.blocksscan.io/api/tokens/${address}/tokenID/${token_id}`,
       );
-      const metadata = await req.json() as Record<string, string>;
-      const ext = /\.(png|jpe?g|gif|bmp|webp|svg|mp4|mov|avi|wmv|flv|mkv)$/i;
-      const parsed = flattenObject(metadata);
-      const [filtered] = Object.values(parsed).filter((x) => ext.test(x));
+      const metadata = await req.json() as NFTResponse;
 
-      return { content: `${filtered}` };
+      return {
+        embeds: [
+          {
+            title: `${metadata.tokenName}`,
+            url: metadata.tokenData.TokenURIInfo,
+            description:
+              `> Owned by \`${metadata.holder}\`\n\`\`\`ini\n${metadata.tokenData.description}\`\`\``,
+            thumbnail: {
+              url: metadata.tokenData.image_thumbnail,
+            },
+            image: {
+              url: metadata.tokenData.image,
+            },
+            color: 3092790,
+          },
+        ],
+      };
     },
   },
   {
