@@ -248,7 +248,8 @@ export const commands = new Proxy<{
           ];
           const data = value.watching.map((v) =>
             `${
-              v.events.sort((a, b) => a - b).map((x) => icons[x]).join("")
+              (v.events.sort((a, b) => a - b).map((x) => icons[x]) ??
+                [emojis.warn]).join("")
             } <#${v.channel_id}> follows \`${v.address}\` since <t:${
               ((new Date(v.updatedAt)).getTime() / 1000).toFixed()
             }:D>`
