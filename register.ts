@@ -132,38 +132,46 @@ export const commands = [
               max_length: 43,
             }],
           },
-          {
-            name: "plot",
-            description: "Get information about a contract in a plot",
-            options: [{
-              name: "days",
-              description: "The dataset period duration in days",
-              type: 4,
-              required: true,
-            }, {
-              name: "type",
-              description: "The contract type",
-              choices: [{
-                name: "xrc_20",
-                value: "0",
-              }, {
-                name: "xrc_721",
-                value: "1",
-              }],
-              required: true,
-            }, {
-              name: "address",
-              description: "The address of the smart contract",
-              type: 3,
-              required: true,
-              min_length: 43,
-              max_length: 43,
-            }],
-            dm_permission: false,
-          },
         ],
       },
     ],
+  },
+  {
+    name: "plot",
+    description: "Get information about a contract in a plot",
+    options: [
+      {
+        name: "days",
+        description: "The dataset period duration in days",
+        type: 4,
+        required: true,
+      },
+      {
+        name: "type",
+        description: "The contract type",
+        type: 3,
+        required: true,
+        choices: [
+          {
+            name: "xrc_20",
+            value: "0",
+          },
+          {
+            name: "xrc_721",
+            value: "1",
+          },
+        ],
+      },
+      {
+        name: "address",
+        description: "The address of the smart contract",
+        type: 3,
+        required: true,
+        min_length: 43,
+        max_length: 43,
+      },
+    ],
+    dm_permission: false,
   },
 ];
 
@@ -182,4 +190,4 @@ const req = await fetch(URL, {
 
 const data = await req.json();
 
-console.log(data["errors"]);
+console.log({ data, ok: req.ok });
