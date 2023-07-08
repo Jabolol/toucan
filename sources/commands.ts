@@ -337,8 +337,8 @@ export const commands = new Proxy<{
             },
             description: `> \`${
               ["XRC21", "XRC721"][<number> type]
-            } over \`${days}\` days\`\n\`\`\`fix\n${address}\n\`\`\``,
-            title: `Plot`,
+            }\` token statistics over \`${days}\` days\`\n\`\`\`fix\n${address}\n\`\`\``,
+            title: `Data visualization`,
           },
         ],
       };
