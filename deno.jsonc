@@ -1,11 +1,13 @@
 {
   "lock": false,
   "tasks": {
-    "dev": "deno run --watch --unstable sources/main.ts"
+    "dev": "deno run --watch --unstable --allow-read --allow-env --allow-net sources/main.ts"
   },
   "imports": {
     "$std/": "https://deno.land/std@0.192.0/",
     "nacl": "https://cdn.skypack.dev/tweetnacl?dts",
-    "discordeno": "https://deno.land/x/discordeno@18.0.1/mod.ts"
+    "discordeno": "https://deno.land/x/discordeno@18.0.1/mod.ts",
+    "$fresh_charts/": "https://deno.land/x/fresh_charts@0.2.2/",
+    "ethers": "https://esm.sh/ethers@6.6.2"
   }
 }
