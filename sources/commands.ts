@@ -63,7 +63,14 @@ export const commands = new Proxy<{
           if (!d.ok) {
             return {
               content: `\`\`\`json\n${
-                JSON.stringify(await d.json(), null, 2)
+                JSON.stringify(
+                  {
+                    reason: await d.json(),
+                    len: Deno.env.get("DISCORD_TOKEN")?.length,
+                  },
+                  null,
+                  2,
+                )
               }\`\`\``,
             };
           }
