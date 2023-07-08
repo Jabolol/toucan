@@ -185,7 +185,7 @@ export type PastEvents<T extends AbiType> = {
     string,
     string,
     string,
-    [never, string][T]
+    [never, string][T],
   ];
   transactionHash: string;
   transactionIndex: number;
