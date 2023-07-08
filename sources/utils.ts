@@ -226,6 +226,8 @@ export const convertToXmlElement = <T extends { [key: string]: unknown }>(
     _content: [],
   };
 
+  if (!obj) return element;
+
   Object.entries(obj).forEach(([key, value]) => {
     if (typeof value === "object") {
       if (Array.isArray(value)) {
