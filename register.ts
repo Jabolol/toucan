@@ -173,6 +173,42 @@ export const commands = [
     ],
     dm_permission: false,
   },
+  {
+    name: "export",
+    description: "Export any contract data over a specified amount of time",
+    options: [{
+      name: "type",
+      description: "The output file type",
+      type: 3,
+      required: true,
+      choices: [
+        {
+          name: "json",
+          value: "0",
+        },
+        {
+          name: "yaml",
+          value: "1",
+        },
+        {
+          name: "xml",
+          value: "2",
+        },
+        {
+          name: "csv",
+          value: "3",
+        },
+      ],
+    }, {
+      name: "address",
+      description: "The address of the smart contract",
+      type: 3,
+      required: true,
+      min_length: 43,
+      max_length: 43,
+    }],
+    dm_permission: false,
+  },
 ];
 
 const URL = `https://discord.com/api/v10/applications/${
