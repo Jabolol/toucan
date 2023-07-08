@@ -402,6 +402,11 @@ export const commands = new Proxy<{
       const req = await fetch(
         `https://xdc.blocksscan.io/api/tokens/${address}/tokenID/${token_id}`,
       );
+
+      if (!req.ok) {
+        return { content: emojis.cross + ` Failed to get the ${"info"}!` };
+      }
+
       const metadata = await req.json() as NFTResponse;
 
       return {
