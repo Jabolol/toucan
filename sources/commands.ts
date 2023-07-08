@@ -3,7 +3,16 @@ import {
   type DiscordInteractionResponse,
 } from "discordeno";
 import { emojis, format } from "./misc.ts";
-import { type ContractConfig, EventTypes, type GuildConfig } from "./types.ts";
+import {
+  AbiType,
+  type ContractConfig,
+  EventTypes,
+  ExportExtension,
+  type GuildConfig,
+} from "./types.ts";
+import { JSONtoXML } from "converter";
+import { json2yaml } from "json2yaml";
+import { getPastEvents } from "./methods.ts";
 
 const kv = await Deno.openKv();
 
@@ -66,7 +75,7 @@ export const commands = new Proxy<{
 
       if ((<string> address.value).indexOf("xdc") !== 0) {
         return {
-          content: emojis.refresh + format`Adresses must start with ${"xdc"}!`,
+          content: emojis.refresh + format` Adresses must start with ${"xdc"}!`,
         };
       }
 
@@ -241,7 +250,7 @@ export const commands = new Proxy<{
           if ((<string> address.value).indexOf("xdc") !== 0) {
             return {
               content: emojis.refresh +
-                format`Adresses must start with ${"xdc"}!`,
+                format` Adresses must start with ${"xdc"}!`,
             };
           }
 
@@ -328,7 +337,7 @@ export const commands = new Proxy<{
 
       if ((<string> address).indexOf("xdc") !== 0) {
         return {
-          content: emojis.refresh + format`Adresses must start with ${"xdc"}!`,
+          content: emojis.refresh + format` Adresses must start with ${"xdc"}!`,
         };
       }
 
@@ -349,6 +358,38 @@ export const commands = new Proxy<{
           },
         ],
       };
+    },
+    export: async ({ data }) => {
+      const [
+        { value: type },
+        { value: days },
+        { value: address },
+      ] = data?.options!;
+
+      if (<number> days <= 0) {
+        return {
+          content: emojis.refresh + format` Days must be greater than ${0}!`,
+        };
+      }
+
+      const raw = await getPastEvents(<string> address, AbiType.XRC_20, [
+        "Transfer",
+        "Approval",
+      ], <number> days);
+
+      switch (<ExportExtension> +<string> type) {
+        case ExportExtension.JSON: {
+          return { content: `\`\`\`json\n${raw}\`\`\`` };
+        }
+        case ExportExtension.YAML: {
+          return {
+            content: `\`\`\`yaml\n${json2yaml(JSON.stringify(raw))}\`\`\``,
+          };
+        }
+        case ExportExtension.XML: {
+          return { content: `\`\`\`xml\n${JSONtoXML(raw)}\`\`\`` };
+        }
+      }
     },
   },
   {
