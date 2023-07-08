@@ -335,25 +335,10 @@ export const commands = new Proxy<{
                 Deno.env.get("TOUCAN_URL")
               }/chart?address=${address}&type=${type}&days=${days}`,
             },
-            fields: [
-              {
-                name: "Total",
-                value: "`1211` events",
-                inline: true,
-              },
-              {
-                name: "Maximum",
-                value: "`250` events",
-                inline: true,
-              },
-              {
-                name: "Mean",
-                value: "`2.1` per day",
-                inline: true,
-              },
-            ],
-            description: `\`\`\`ts\n${address}\n\`\`\``,
-            title: `Events in the last ${days} days`,
+            description: `> \`${
+              ["XRC21", "XRC721"][<number> type]
+            } over \`${days}\` days\`\n\`\`\`fix\n${address}\n\`\`\``,
+            title: `Plot`,
           },
         ],
       };
