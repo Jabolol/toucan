@@ -200,6 +200,11 @@ export const commands = [
         },
       ],
     }, {
+      name: "days",
+      description: "The dataset period duration in days",
+      type: 4,
+      required: true,
+    }, {
       name: "address",
       description: "The address of the smart contract",
       type: 3,
