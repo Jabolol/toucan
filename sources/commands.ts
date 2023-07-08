@@ -250,7 +250,7 @@ export const commands = new Proxy<{
             `${
               v.events.sort((a, b) => a - b).map((x) => icons[x]).join("")
             } <#${v.channel_id}> follows \`${v.address}\` since <t:${
-              (new Date(v.address)).getTime() / 1000
+              (new Date(v.updatedAt)).getTime() / 1000
             }:D>`
           ).join("\n");
           return {
