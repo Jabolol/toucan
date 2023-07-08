@@ -136,10 +136,9 @@ const countOccurrences = (array: number[], days: number): number[] => {
     counts[element] = (counts[element] || 0) + 1;
   });
 
-  const minElement = Math.min(...array);
   const occurrences: number[] = [];
 
-  for (let i = minElement; i <= days; i++) {
+  for (let i = 0; i <= days; i++) {
     occurrences.push(counts[i] || 0);
   }
 
@@ -214,3 +213,17 @@ export const chart = async (url: URL) => {
     },
   );
 };
+
+export const flattenObject = (
+  obj: { [k: string]: string },
+  prefix = "",
+): { [k: string]: string } =>
+  Object.entries(obj).reduce((flattened, [key, value]) => {
+    const propName = prefix ? `${prefix}.${key}` : key;
+
+    if (typeof value === "object" && value !== null) {
+      return { ...flattened, ...flattenObject(value, propName) };
+    } else {
+      return { ...flattened, [propName]: value };
+    }
+  }, {});
