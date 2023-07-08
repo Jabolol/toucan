@@ -1,4 +1,5 @@
 import {
+  type CreateMessage,
   type DiscordInteraction,
   type DiscordInteractionResponse,
 } from "discordeno";
@@ -24,9 +25,47 @@ export const commands = new Proxy<{
 }>(
   {
     hello: async () => {
+      const data = await poll();
+
+      for (const { guild_id, watching } of data) {
+        for (const { address, channel_id, events } of watching) {
+          const history = await getPastEvents(
+            address,
+            events.includes(EventTypes.ApprovalForAll)
+              ? AbiType.XRC_721
+              : AbiType.XRC_20,
+            events.includes(EventTypes.All)
+              ? ["Transfer", "Approval", "ApprovalForAll"]
+              : events.map((x) =>
+                ["Transfer", "Approval", "ApprovalForAll"][x]
+              ),
+            300 / 86400,
+          );
+          // TODO(jabolo): filter if any event has happened here
+          await fetch(
+            `https://discord.com/api/v10/channels/${channel_id}/messages`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${Deno.env.get("DISCORD_TOKEN")}`,
+              },
+              method: "POST",
+              body: JSON.stringify(
+                {
+                  content: emojis.check +
+                    format` Sent to ${guild_id}\n\`\`\`json\n${
+                      JSON.stringify(history, null, 2)
+                    }\`\`\``,
+                } satisfies CreateMessage,
+              ),
+            },
+          );
+        }
+      }
+
       return {
         content: `${emojis.check}\n\`\`\`json\n${
-          JSON.stringify(await poll(), null, 2)
+          JSON.stringify(data, null, 2)
         }\`\`\``,
       };
     },
