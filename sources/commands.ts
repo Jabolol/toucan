@@ -373,32 +373,27 @@ export const commands = new Proxy<{
         "Approval",
       ], <number> days);
 
-      const req = await fetch("https://paste.gg/pastes", {
+      const res = await fetch("https://pastebin.com/api/api_post.php", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify({
-          name: `${address} export -> ${days} entries`,
-          visibility: "unlisted",
-          files: [{
-            name: "dump.json",
-            content: { format: "text", value: JSON.stringify(raw) },
-          }],
+        body: new URLSearchParams({
+          api_dev_key: Deno.env.get("PASTEBIN_API_KEY")!,
+          api_option: "paste",
+          api_paste_code: JSON.stringify(raw),
         }),
       });
 
-      if (!req.ok) {
+      if (!res.ok) {
         return {
-          content: emojis.cross + format` Unexpected error: ${req.statusText}`,
+          content: emojis.cross +
+            format` Something went wrong: ${res.statusText}`,
         };
       }
 
-      const { result: { id } } = await req.json() as { result: { id: string } };
-
       return {
-        content:
-          `${emojis.check} Here's your data: https://paste.gg/p/anonymous/${id}`,
+        content: `${emojis.check} Here's your data: ${await res.text()}`,
       };
     },
   },
