@@ -66,7 +66,7 @@ export const commands = new Proxy<{
                 JSON.stringify(
                   {
                     reason: await d.json(),
-                    len: Deno.env.get("DISCORD_TOKEN")?.length,
+                    channel_id,
                   },
                   null,
                   2,
