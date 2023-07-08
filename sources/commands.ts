@@ -10,9 +10,10 @@ import {
   ExportExtension,
   type GuildConfig,
 } from "./types.ts";
-import { JSONtoXML } from "converter";
-import { json2yaml } from "json2yaml";
 import { getPastEvents } from "./methods.ts";
+import { toXML } from "json2xml";
+import { stringify } from "json2yaml";
+import { convertToXmlElement } from "./utils.ts";
 
 const kv = await Deno.openKv();
 
@@ -383,11 +384,15 @@ export const commands = new Proxy<{
         }
         case ExportExtension.YAML: {
           return {
-            content: `\`\`\`yaml\n${json2yaml(JSON.stringify(raw))}\`\`\``,
+            content: `\`\`\`yaml\n${stringify(JSON.stringify(raw))}\`\`\``,
           };
         }
         case ExportExtension.XML: {
-          return { content: `\`\`\`xml\n${JSONtoXML(raw)}\`\`\`` };
+          return {
+            content: `\`\`\`xml\n${
+              toXML(convertToXmlElement({ raw }, "root"))
+            }\`\`\``,
+          };
         }
       }
     },
