@@ -42,7 +42,7 @@ export const commands = new Proxy<{
             300 / 86400,
           );
           // TODO(jabolo): filter if any event has happened here
-          await fetch(
+          const d = await fetch(
             `https://discord.com/api/v10/channels/${channel_id}/messages`,
             {
               headers: {
@@ -60,6 +60,13 @@ export const commands = new Proxy<{
               ),
             },
           );
+          if (!d.ok) {
+            return {
+              content: `\`\`\`json\n${
+                JSON.stringify(await d.json(), null, 2)
+              }\`\`\``,
+            };
+          }
         }
       }
 
