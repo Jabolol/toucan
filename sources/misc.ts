@@ -50,6 +50,9 @@ export const emojis = {
   cross: "<:crossmark:1126950089525563483>",
   refresh: "<:1158refresh:1126923627607101460>",
   bot: "<:4928applicationbot:1126923610926354553>",
+  members: "<:4696members:1126923308231827607>",
+  owner: "<:8259owner:1126923126803005572>",
+  boost: "<:7155booster:1126923621714116658>",
 } as const;
 
 export const banner = () => {
