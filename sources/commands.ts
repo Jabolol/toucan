@@ -379,7 +379,10 @@ export const commands = new Proxy<{
       // it is not possible to upload a file, therefore the content is trimmed.
       // @see https://github.com/discord/discord-api-docs/discussions/6204
       if (ready.length > 2000) {
-        return { content: `${emojis.cross} Too much text, select less days!` };
+        return {
+          content: emojis.cross +
+            format` ${ready.length} is too much text, select less days!`,
+        };
       }
 
       return { content: `\`\`\`json\n${ready}\`\`\`` };
