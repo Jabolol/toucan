@@ -418,10 +418,10 @@ export const commands = new Proxy<{
             thumbnail: {
               url: metadata.tokenData.image_thumbnail,
             },
-            image: {
+            color: 3092790,
+            [metadata.tokenData.image.includes("mp4") ? "video" : "image"]: {
               url: metadata.tokenData.image,
             },
-            color: 3092790,
           },
         ],
       };
