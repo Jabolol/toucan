@@ -9,6 +9,7 @@ import { chart as makeChart } from "$fresh_charts/core.ts";
 import {
   AbiType,
   type ContractResponse,
+  GuildConfig,
   type PossibleEvents,
   type XRC20Approval,
   type XRC20Transfer,
@@ -18,6 +19,7 @@ import {
 } from "./types.ts";
 import { DEFAULT_ABI_XRC20, DEFAULT_ABI_XRC721, json } from "./misc.ts";
 import { getPastEvents } from "./methods.ts";
+import { kv } from "./commands.ts";
 import { render } from "resvg";
 
 export const getAbi = async (
@@ -227,3 +229,12 @@ export const flattenObject = (
       return { ...flattened, [propName]: value };
     }
   }, {});
+
+export const poll = async () => {
+  const configs: GuildConfig[] = [];
+
+  for await (const { value } of kv.list<GuildConfig>({ prefix: ["guild"] })) {
+    configs.push(value);
+  }
+  return configs;
+};
