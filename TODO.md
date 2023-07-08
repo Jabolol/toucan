@@ -11,9 +11,11 @@ DONE:
      <address>
    - /config <list>
 
-TODO: 3. Data display in chart
+3. Data display in chart
 
 - /plot <days> <type ==> XRC20/XRC721> <address>
+
+TODO:
 
 4. Data export (csv, json, etc)
    - /export <address> <events ==> transfer/approval/approvalforall/all> <value
