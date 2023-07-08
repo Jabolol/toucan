@@ -11,7 +11,7 @@ import {
   type GuildConfig,
 } from "./types.ts";
 import { getPastEvents } from "./methods.ts";
-import { toXML } from "json2xml";
+import json2xml from "json2xml";
 import { stringify } from "json2yaml";
 import { convertToXmlElement } from "./utils.ts";
 
@@ -390,7 +390,7 @@ export const commands = new Proxy<{
         case ExportExtension.XML: {
           return {
             content: `\`\`\`xml\n${
-              toXML(convertToXmlElement({ raw }, "root"))
+              json2xml.toXML(convertToXmlElement({ raw }, "root"))
             }\`\`\``,
           };
         }
