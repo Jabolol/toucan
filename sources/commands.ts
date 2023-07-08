@@ -240,8 +240,21 @@ export const commands = new Proxy<{
               content: `${emojis.cross} There is not any data yet!`,
             };
           }
+          const icons = [
+            emojis.members,
+            emojis.check,
+            emojis.owner,
+            emojis.boost,
+          ];
+          const data = value.watching.map((v) =>
+            `${
+              v.events.sort((a, b) => a - b).map((x) => icons[x]).join("")
+            } <#${v.channel_id}> follows \`${v.address}\` since <t:${
+              (new Date(v.address)).getTime() / 1000
+            }:D>`
+          ).join("\n");
           return {
-            content: `\`\`\`json\n${JSON.stringify(value, null, 2)}\`\`\``,
+            content: `# Events followed by server \`${guild_id}\`\n${data}`,
           };
         }
         case "remove":
