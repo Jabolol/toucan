@@ -15,14 +15,14 @@ DONE:
 
 - /plot <days> <type ==> XRC20/XRC721> <address>
 
-TODO:
-
 4. Data export (csv, json, etc)
    - /export <address> <events ==> transfer/approval/approvalforall/all> <value
      ==> csv/json>
 
+TODO:
+
 5. NFT metadata explorer
-   - /nft <address> <token_id>
+   - /nft <token_id> <address>
 
 6. Periodic notificatiosn
 
