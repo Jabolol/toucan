@@ -53,6 +53,7 @@ export const emojis = {
   members: "<:4696members:1126923308231827607>",
   owner: "<:8259owner:1126923126803005572>",
   boost: "<:7155booster:1126923621714116658>",
+  warn: "<:2814warning:1126923560380813455>",
 } as const;
 
 export const banner = () => {
