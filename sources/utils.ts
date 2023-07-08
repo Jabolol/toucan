@@ -1,6 +1,11 @@
-import { ethers } from "https://esm.sh/ethers@6.6.2";
-import type { ContractEventName } from "https://esm.sh/ethers@6.6.2";
 import {
+  type ContractEventName,
+  ethers,
+  Interface,
+  InterfaceAbi,
+} from "https://esm.sh/ethers@6.6.2";
+import {
+  AbiType,
   type ContractResponse,
   type PossibleEvents,
   type XRC20Approval,
@@ -9,14 +14,18 @@ import {
   type XRC721ApprovalForAll,
   type XRC721Transfer,
 } from "./types.ts";
+import { DEFAULT_ABI_XRC20, DEFAULT_ABI_XRC721 } from "./misc.ts";
 
-export const getAbi = async (address: string): Promise<ContractResponse> => {
+export const getAbi = async (
+  address: string,
+  type: AbiType,
+): Promise<ContractResponse | { [k: string]: unknown }[]> => {
   const contractData = await fetch(
     `https://xdc.blocksscan.io/api/contracts/${address}`,
   );
 
   if (!contractData.ok) {
-    throw new Error(`Contract not found at address ${address}`);
+    return [DEFAULT_ABI_XRC20, DEFAULT_ABI_XRC721][type];
   }
   return await contractData.json();
 };
@@ -93,9 +102,14 @@ export const getEventArguments = (
   return event.inputs.map(({ name }) => name);
 };
 
-export const isXrc20 = async (address: string) => {
-  const abi = await getAbi(address);
-  const iface = new ethers.Interface(JSON.parse(abi.abiCode));
+const isContract = (c: unknown): c is ContractResponse =>
+  typeof c === "object" && c !== null && "abiCode" in c;
 
-  return !iface.getFunction("ownerOf");
+export const filterAbi = (
+  data: ContractResponse | { [k: string]: unknown }[],
+): Interface | InterfaceAbi => {
+  if (isContract(data)) {
+    return JSON.parse(data.abiCode);
+  }
+  return data as unknown as (Interface | InterfaceAbi);
 };
