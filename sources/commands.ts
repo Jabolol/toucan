@@ -393,7 +393,7 @@ export const commands = new Proxy<{
       }
 
       return {
-        content: `${emojis.check} Here's your data: ${await res.text()}`,
+        content: `${emojis.check} Here's your data: <${await res.text()}>`,
       };
     },
   },
