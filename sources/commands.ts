@@ -42,12 +42,12 @@ export const commands = new Proxy<{
             300 / 86400,
           );
           // TODO(jabolo): filter if any event has happened here
-          const d = await fetch(
+          await fetch(
             `https://discord.com/api/v10/channels/${channel_id}/messages`,
             {
               headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${Deno.env.get("DISCORD_TOKEN")}`,
+                "Authorization": `Bot ${Deno.env.get("DISCORD_TOKEN")}`,
               },
               method: "POST",
               body: JSON.stringify(
@@ -60,20 +60,6 @@ export const commands = new Proxy<{
               ),
             },
           );
-          if (!d.ok) {
-            return {
-              content: `\`\`\`json\n${
-                JSON.stringify(
-                  {
-                    reason: await d.json(),
-                    channel_id,
-                  },
-                  null,
-                  2,
-                )
-              }\`\`\``,
-            };
-          }
         }
       }
 
