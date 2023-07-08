@@ -2,7 +2,7 @@ import { type ContractEventName, ethers } from "ethers";
 import { filterAbi, getAbi, handler } from "./utils.ts";
 import { AbiType } from "./types.ts";
 
-const provider = new ethers.JsonRpcProvider("https://erpc.xinfin.network/");
+const provider = new ethers.JsonRpcProvider("https://erpc.apothem.network/");
 
 export const getBlockNumber = async () => await provider.getBlockNumber();
 
