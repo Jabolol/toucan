@@ -415,7 +415,7 @@ export const commands = new Proxy<{
             title: `${metadata.tokenName}`,
             url: metadata.tokenData.TokenURIInfo,
             description:
-              `\n\`\`\`ini\n${metadata.tokenData.description}\`\`\`\n\`\`\`ini\n${
+              `\n\`\`\`ini\n${metadata.tokenData.description}\`\`\`\n\`\`\`json\n${
                 JSON.stringify({
                   [
                     metadata.tokenData.image.includes("mp4")
@@ -424,7 +424,7 @@ export const commands = new Proxy<{
                   ]: {
                     url: metadata.tokenData.image,
                   },
-                })
+                }, null, 2)
               }\`\`\``,
             thumbnail: {
               url: metadata.tokenData.image_thumbnail,
