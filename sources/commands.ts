@@ -7,13 +7,9 @@ import {
   AbiType,
   type ContractConfig,
   EventTypes,
-  ExportExtension,
   type GuildConfig,
 } from "./types.ts";
 import { getPastEvents } from "./methods.ts";
-import json2xml from "json2xml";
-import { stringify } from "json2yaml";
-import { convertToXmlElement } from "./utils.ts";
 
 const kv = await Deno.openKv();
 
@@ -362,7 +358,6 @@ export const commands = new Proxy<{
     },
     export: async ({ data }) => {
       const [
-        { value: type },
         { value: days },
         { value: address },
       ] = data?.options!;
@@ -378,23 +373,7 @@ export const commands = new Proxy<{
         "Approval",
       ], <number> days);
 
-      switch (<ExportExtension> +<string> type) {
-        case ExportExtension.JSON: {
-          return { content: `\`\`\`json\n${raw}\`\`\`` };
-        }
-        case ExportExtension.YAML: {
-          return {
-            content: `\`\`\`yaml\n${stringify(JSON.stringify(raw))}\`\`\``,
-          };
-        }
-        case ExportExtension.XML: {
-          return {
-            content: `\`\`\`xml\n${
-              json2xml.toXML(convertToXmlElement({ raw }, "root"))
-            }\`\`\``,
-          };
-        }
-      }
+      return { content: `\`\`\`json\n${raw}\`\`\`` };
     },
   },
   {

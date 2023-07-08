@@ -175,27 +175,8 @@ export const commands = [
   },
   {
     name: "export",
-    description: "Export any contract data over a specified amount of time",
+    description: "Export any contract data to JSON",
     options: [{
-      name: "type",
-      description: "The output file type",
-      type: 3,
-      required: true,
-      choices: [
-        {
-          name: "json",
-          value: "0",
-        },
-        {
-          name: "yaml",
-          value: "1",
-        },
-        {
-          name: "xml",
-          value: "2",
-        },
-      ],
-    }, {
       name: "days",
       description: "The dataset period duration in days",
       type: 4,

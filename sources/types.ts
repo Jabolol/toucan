@@ -35,12 +35,6 @@ export enum AbiType {
   XRC_721,
 }
 
-export enum ExportExtension {
-  JSON,
-  YAML,
-  XML,
-}
-
 type DiscordInfo = {
   updatedAt: Date;
   guild_id: string;
