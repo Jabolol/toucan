@@ -194,10 +194,6 @@ export const commands = [
           name: "xml",
           value: "2",
         },
-        {
-          name: "csv",
-          value: "3",
-        },
       ],
     }, {
       name: "days",
