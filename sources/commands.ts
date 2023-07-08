@@ -3,7 +3,13 @@ import {
   type DiscordInteractionResponse,
 } from "discordeno";
 import { emojis, format } from "./misc.ts";
-import { type ContractConfig, EventTypes, type GuildConfig } from "./types.ts";
+import {
+  AbiType,
+  type ContractConfig,
+  EventTypes,
+  type GuildConfig,
+} from "./types.ts";
+import { getPastEvents } from "./methods.ts";
 
 const kv = await Deno.openKv();
 
@@ -318,6 +324,34 @@ export const commands = new Proxy<{
           };
         }
       }
+    },
+    plot: async (_interaction) => {
+      const type = AbiType.XRC_721;
+      const address = "xdc85d216d87C993c250A7725aF8f6C161d0504c32B";
+      const days = 60;
+
+      const events = [["Transfer", "Approval"], [
+        "Transfer",
+        "Approval",
+        "ApprovalForAll",
+      ]][type];
+
+      const _data = await getPastEvents(address, type, events, days);
+
+      return {
+        embeds: [{
+          title: "Hello",
+          description: `\`\`\`json\n${
+            JSON.stringify({ hello: "world" }, null, 2)
+          }\`\`\``,
+          image: {
+            url: "attachment://plot.png",
+          },
+        }],
+        files: [{
+          name: "plot.png"
+        }]
+      };
     },
   },
   {
