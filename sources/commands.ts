@@ -373,7 +373,7 @@ export const commands = new Proxy<{
         "Approval",
       ], <number> days);
 
-      const req = await fetch("https://pastes.gg/pastes", {
+      const req = await fetch("https://paste.gg/pastes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
