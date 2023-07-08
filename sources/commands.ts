@@ -337,7 +337,8 @@ export const commands = new Proxy<{
             },
             description: `> \`${
               ["XRC21", "XRC721"][<number> type]
-            }\` token statistics over \`${days}\` days\n\`\`\`fix\n${address}\n\`\`\``,
+            }\` event count over \`${days}\` days\n\`\`\`fix\n${address}\n\`\`\``,
+            url: `https://xdc.blocksscan.io/address/${address}`,
             title: `Data visualization`,
           },
         ],
