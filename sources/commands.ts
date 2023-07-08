@@ -326,6 +326,12 @@ export const commands = new Proxy<{
         { value: address },
       ] = data?.options!;
 
+      if ((<string> address).indexOf("xdc") !== 0) {
+        return {
+          content: emojis.refresh + format`Adresses must start with ${"xdc"}!`,
+        };
+      }
+
       return {
         embeds: [
           {
