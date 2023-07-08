@@ -1,4 +1,4 @@
-import { type ContractEventName } from "https://esm.sh/ethers@6.6.2";
+import { type ContractEventName } from "ethers";
 
 export type ContractResponse = {
   _id: string;
@@ -172,3 +172,21 @@ export type ContractEvent = {
   };
   args: [string, string, number];
 };
+
+export type PastEvents<T extends AbiType> = {
+  _type: "log";
+  address: string;
+  blockHash: string;
+  blockNumber: number;
+  data: "0x";
+  index: number;
+  removed: boolean;
+  topics: [
+    string,
+    string,
+    string,
+    [never, string][T]
+  ];
+  transactionHash: string;
+  transactionIndex: number;
+}[];
