@@ -9,6 +9,6 @@
     "discordeno": "https://deno.land/x/discordeno@18.0.1/mod.ts",
     "$fresh_charts/": "https://deno.land/x/fresh_charts@0.2.2/",
     "ethers": "https://esm.sh/ethers@6.6.2",
-    "resvg": "https://deno.land/x/resvg_wasm@0.2.0/mod.ts",
+    "resvg": "https://deno.land/x/resvg_wasm@0.2.0/mod.ts"
   }
 }
