@@ -3,7 +3,9 @@ import {
   ethers,
   Interface,
   InterfaceAbi,
-} from "https://esm.sh/ethers@6.6.2";
+} from "ethers";
+import { renderChart } from "$fresh_charts/mod.ts";
+import { ChartColors, transparentize } from "$fresh_charts/utils.ts";
 import {
   AbiType,
   type ContractResponse,
@@ -112,4 +114,57 @@ export const filterAbi = (
     return JSON.parse(data.abiCode);
   }
   return data as unknown as (Interface | InterfaceAbi);
+};
+
+export const calculateOffsetInDays = (blockNumbers: number[]): number[] => {
+  const minBlockNumber = Math.min(...blockNumbers);
+
+  return blockNumbers.map((blockNumber) => {
+    const differenceInBlocks = blockNumber - minBlockNumber;
+    const differenceInSeconds = differenceInBlocks * 15;
+    const offsetInDays = Math.round(differenceInSeconds / 86400);
+    return offsetInDays;
+  });
+};
+
+const countOccurrences = (array: number[], days: number): number[] => {
+  const counts: { [k: number]: number } = {};
+
+  array.forEach((element) => {
+    counts[element] = (counts[element] || 0) + 1;
+  });
+
+  const minElement = Math.min(...array);
+  const occurrences: number[] = [];
+
+  for (let i = minElement; i <= days; i++) {
+    occurrences.push(counts[i] || 0);
+  }
+
+  return occurrences;
+};
+
+export const createChart = (data: (ethers.Log | ethers.EventLog)[], days: number) => {
+  const blockDays = calculateOffsetInDays(
+    data.map(({ blockNumber }) => blockNumber),
+  );
+
+  return renderChart({
+    type: "line",
+    data: {
+      labels: Array.from({ length: days }, (_, i) => "" + (i + 1)),
+      datasets: [
+        {
+          label: "Contract Events",
+          data: countOccurrences(blockDays, days).map((x) => "" + x),
+          borderColor: ChartColors.Blue,
+          backgroundColor: transparentize(ChartColors.Blue, 0.5),
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      devicePixelRatio: 1,
+    },
+  });
 };
