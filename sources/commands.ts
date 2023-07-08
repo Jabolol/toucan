@@ -292,7 +292,7 @@ export const commands = new Proxy<{
             {
               ...guild,
               watching: guild.watching.map((data) =>
-                guild.guild_id === guild_id
+                value.address === address.value!
                   ? {
                     ...data,
                     events: name === "add"
@@ -311,7 +311,7 @@ export const commands = new Proxy<{
             {
               ...value,
               subs: value.subs.map((data) =>
-                data.guild_id === guild_id
+                value.address === address.value!
                   ? {
                     ...data,
                     events: name === "add"
