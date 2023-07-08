@@ -327,9 +327,35 @@ export const commands = new Proxy<{
       ] = data?.options!;
 
       return {
-        content: `${
-          Deno.env.get("TOUCAN_URL")
-        }/chart?address=${address}&type=${type}&days=${days}`,
+        embeds: [
+          {
+            color: 3092790,
+            image: {
+              url: `${
+                Deno.env.get("TOUCAN_URL")
+              }/chart?address=${address}&type=${type}&days=${days}`,
+            },
+            fields: [
+              {
+                name: "Total",
+                value: "`1211` events",
+                inline: true,
+              },
+              {
+                name: "Maximum",
+                value: "`250` events",
+                inline: true,
+              },
+              {
+                name: "Mean",
+                value: "`2.1` per day",
+                inline: true,
+              },
+            ],
+            description: `\`\`\`ts\n${address}\n\`\`\``,
+            title: `Events in the last ${days} days`,
+          },
+        ],
       };
     },
   },
