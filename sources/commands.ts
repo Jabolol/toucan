@@ -373,19 +373,33 @@ export const commands = new Proxy<{
         "Approval",
       ], <number> days);
 
-      const ready = JSON.stringify(raw);
+      const req = await fetch("https://pastes.gg/pastes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: `${address} export -> ${days} entries`,
+          visibility: "unlisted",
+          files: [{
+            name: "dump.json",
+            content: { format: "text", value: JSON.stringify(raw) },
+          }],
+        }),
+      });
 
-      // FIXME(jabolo): Current Discord's interaction endpoint limitation,
-      // it is not possible to upload a file, therefore the content is trimmed.
-      // @see https://github.com/discord/discord-api-docs/discussions/6204
-      if (ready.length > 2000) {
+      if (!req.ok) {
         return {
-          content: emojis.cross +
-            format` ${ready.length} is too much text, select less days!`,
+          content: emojis.cross + format` Unexpected error: ${req.statusText}`,
         };
       }
 
-      return { content: `\`\`\`json\n${ready}\`\`\`` };
+      const { result: { id } } = await req.json() as { result: { id: string } };
+
+      return {
+        content:
+          `${emojis.check} Here's your data: https://paste.gg/p/anonymous/${id}`,
+      };
     },
   },
   {
