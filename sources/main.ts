@@ -6,8 +6,14 @@ import { serve } from "$std/http/server.ts";
 import { type DiscordInteraction } from "discordeno";
 import { json, respond, verifySignature } from "./misc.ts";
 import { commands } from "./commands.ts";
+import { chart } from "./utils.ts";
 
 serve(async (request) => {
+  const url = new URL(request.url);
+
+  if (url.pathname.indexOf("/chart") > -1) {
+    return await chart(url);
+  }
   if (request.method !== "POST") {
     return json({ error: "Invalid method" }, { status: 400 });
   }
