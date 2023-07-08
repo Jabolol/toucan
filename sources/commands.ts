@@ -10,6 +10,7 @@ import {
   type GuildConfig,
 } from "./types.ts";
 import { getPastEvents } from "./methods.ts";
+import { flattenObject } from "./utils.ts";
 
 const kv = await Deno.openKv();
 
@@ -395,6 +396,18 @@ export const commands = new Proxy<{
       return {
         content: `${emojis.check} Here's your data: <${await res.text()}>`,
       };
+    },
+    nft: async ({ data }) => {
+      const [{ value: token_id }, { value: address }] = data?.options!;
+      const req = await fetch(
+        `https://xdc.blocksscan.io/api/tokens/${address}/tokenID/${token_id}`,
+      );
+      const metadata = await req.json() as Record<string, string>;
+      const ext = /\.(png|jpe?g|gif|bmp|webp|svg|mp4|mov|avi|wmv|flv|mkv)$/i;
+      const parsed = flattenObject(metadata);
+      const [filtered] = Object.values(parsed).filter((x) => ext.test(x));
+
+      return { content: `${filtered}` };
     },
   },
   {
