@@ -63,8 +63,6 @@ export const commands = new Proxy<{
         embeds: [{
           video: {
             url: "https://nftfiles.primeport.xyz/aiku/videos/21-fall.mp4",
-            width: 400,
-            height: 400,
           },
         }],
       };
