@@ -433,9 +433,6 @@ export const commands = new Proxy<{
             title: `${metadata.tokenName}`,
             url: metadata.tokenData.TokenURIInfo,
             description: `\n\`\`\`ini\n${metadata.tokenData.description}\`\`\``,
-            thumbnail: {
-              url: metadata.tokenData.image_thumbnail,
-            },
             color: 3092790,
             [metadata.tokenData.image.includes("mp4") ? "video" : "image"]: {
               url: metadata.tokenData.image,
