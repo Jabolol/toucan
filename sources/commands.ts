@@ -246,21 +246,21 @@ export const commands = new Proxy<{
             emojis.owner,
             emojis.boost,
           ];
-          const data = value.watching.length
-            ? value.watching.map((v) =>
-              `${
-                v.events.length
-                  ? (v.events.sort((a, b) => a - b).map((x) => icons[x])).join(
-                    "",
-                  )
-                  : emojis.warn
-              } <#${v.channel_id}> follows \`${v.address}\` since <t:${
-                ((new Date(v.updatedAt)).getTime() / 1000).toFixed()
-              }:D>`
-            ).join("\n")
-            : `${emojis.cross} You are not following any contract yet!`;
+          const data = value.watching.map((v) =>
+            `${
+              v.events.length
+                ? (v.events.sort((a, b) => a - b).map((x) => icons[x])).join(
+                  "",
+                )
+                : emojis.warn
+            } <#${v.channel_id}> follows \`${v.address}\` since <t:${
+              ((new Date(v.updatedAt)).getTime() / 1000).toFixed()
+            }:D>`
+          ).join("\n");
           return {
-            content: `# Events followed by server \`${guild_id}\`\n${data}`,
+            content: value.watching.length
+              ? `# Events followed by server \`${guild_id}\`\n${data}`
+              : `${emojis.cross} You are not following any contract yet!`,
           };
         }
         case "remove":
