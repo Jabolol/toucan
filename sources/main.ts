@@ -7,12 +7,17 @@ import { type DiscordInteraction } from "discordeno";
 import { json, respond, verifySignature } from "./misc.ts";
 import { commands } from "./commands.ts";
 import { chart } from "./utils.ts";
+import { notify } from "../cron.ts";
 
 serve(async (request) => {
   const url = new URL(request.url);
 
   if (url.pathname.indexOf("/chart") > -1) {
     return await chart(url);
+  }
+  if (url.pathname.indexOf("/notify") > -1) {
+    await notify();
+    return json({ message: "ok" });
   }
   if (request.method !== "POST") {
     return json({ error: "Invalid method" }, { status: 400 });
