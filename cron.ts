@@ -1,10 +1,12 @@
 import "$std/dotenv/load.ts";
 import { CreateMessage } from "discordeno";
 import { getPastEvents } from "./sources/methods.ts";
-import { EventTypes,AbiType } from "./sources/types.ts";
+import { AbiType, EventTypes } from "./sources/types.ts";
 import { poll } from "./sources/utils.ts";
 
 const data = await poll();
+
+const ELAPSED_TIME = 60 / 86400;
 
 for (const { watching } of data) {
   for (const { address, channel_id, events } of watching) {
@@ -16,7 +18,7 @@ for (const { watching } of data) {
       events.includes(EventTypes.All)
         ? ["Transfer", "Approval", "ApprovalForAll"]
         : events.map((x) => ["Transfer", "Approval", "ApprovalForAll"][x]),
-      300 / 86400,
+      ELAPSED_TIME,
     );
     if (history.length) {
       fetch(
@@ -29,7 +31,16 @@ for (const { watching } of data) {
           method: "POST",
           body: JSON.stringify(
             {
-              content: `${JSON.stringify(history, null, 2)}\`\`\``,
+              embeds: history.map((x) => ({
+                color: 3092790,
+                url:
+                  `https://xdc.blocksscan.io/blocks/${x.blockNumber}#transactions`,
+                title: "Event triggered!",
+                description:
+                  `> Address\n\`\`\`md\n${x.address}\n\`\`\`\n> Block hash\n\`\`\`ini\n${x.blockHash}\n\`\`\`\n> Transaction hash\n\`\`\`ini\n${x.transactionHash}\n\`\`\`\n> Topics\n\`\`\`md\n1. ${
+                    x.topics[0]
+                  }\n2. ${x.topics[1]}\n3. ${x.topics[2]}\n\`\`\``,
+              })),
             } satisfies CreateMessage,
           ),
         },
