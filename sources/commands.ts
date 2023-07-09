@@ -296,17 +296,17 @@ export const commands = new Proxy<{
             ["guild", guild_id],
             {
               ...guild,
-              watching: guild.watching.map((data) =>
+              watching: guild.watching.map((val) =>
                 value.address === address.value!
                   ? {
-                    ...data,
+                    ...val,
                     events: name === "add"
                       ? [
-                        ...new Set([...data.events, +<string> event.value]),
+                        ...new Set([...val.events, +<string> event.value]),
                       ]
-                      : data.events.filter((d) => d !== +<string> event.value),
+                      : val.events.filter((d) => d !== +<string> event.value),
                   }
-                  : data
+                  : val
               ),
             } satisfies GuildConfig,
           );
