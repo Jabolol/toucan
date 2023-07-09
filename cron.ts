@@ -18,7 +18,7 @@ export const notify = async () => {
           : AbiType.XRC_20,
         events.includes(EventTypes.All)
           ? ["Transfer", "Approval"]
-          : events.map((x) => ["Transfer", "Approval", "ApprovalForAll"][x]),
+          : events.map((x) => ["Transfer", "Approval"][x]),
         ELAPSED_TIME,
       );
       if (history.length) {
