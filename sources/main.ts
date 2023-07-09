@@ -4,10 +4,12 @@ import "$std/dotenv/load.ts";
 import { blue } from "$std/fmt/colors.ts";
 import { serve } from "$std/http/server.ts";
 import { type DiscordInteraction } from "discordeno";
-import { json, respond, verifySignature } from "./misc.ts";
+import { banner, json, respond, verifySignature } from "./misc.ts";
 import { commands } from "./commands.ts";
 import { chart } from "./utils.ts";
 import { notify } from "../cron.ts";
+
+banner();
 
 serve(async (request) => {
   const url = new URL(request.url);
