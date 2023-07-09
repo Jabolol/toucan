@@ -116,7 +116,7 @@ pastebin.
 ![](./assets/nft.png)
 
 ```bash
-/export [token_id] [address]
+/nft [token_id] [address]
 ```
 
 The `nft` command displays the metadata for the specified token id and address
