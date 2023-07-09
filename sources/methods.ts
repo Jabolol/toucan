@@ -65,26 +65,3 @@ export const getPastEvents = async (
 
   return ((await Promise.all(pastEventPromises)).flatMap((k) => k));
 };
-
-if (import.meta.main) {
-  // TODO(jabolo): remove this, used to check testnet events
-  // await follow("xdc8dA38026f5bB57D20485299903858092AD9C9fBA", ["Transfer"]);
-
-  const type: AbiType = AbiType.XRC_721;
-  const address = "xdc85d216d87C993c250A7725aF8f6C161d0504c32B";
-  const days = 365;
-  const events = [["Transfer", "Approval"], [
-    "Transfer",
-    "Approval",
-    "ApprovalForAll",
-  ]][type];
-
-  const data = await getPastEvents(address, type, events, days);
-
-  console.log(data.length);
-
-  await Deno.writeFile(
-    `out_${["20", "721"][type]}.json`,
-    new TextEncoder().encode(JSON.stringify(data, null, 2)),
-  );
-}
