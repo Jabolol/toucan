@@ -315,17 +315,17 @@ export const commands = new Proxy<{
             ["address", <string> address.value],
             {
               ...value,
-              subs: value.subs.map((data) =>
+              subs: value.subs.map((val) =>
                 value.address === address.value!
                   ? {
-                    ...data,
+                    ...val,
                     events: name === "add"
                       ? [
-                        ...new Set([...data.events, +<string> event.value]),
+                        ...new Set([...val.events, +<string> event.value]),
                       ]
-                      : data.events.filter((d) => d !== +<string> event.value),
+                      : val.events.filter((d) => d !== +<string> event.value),
                   }
-                  : data
+                  : val
               ),
             } satisfies ContractConfig,
           );
