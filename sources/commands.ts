@@ -297,13 +297,11 @@ export const commands = new Proxy<{
             {
               ...guild,
               watching: guild.watching.map((val) =>
-                value.address === address.value!
+                val.address === address.value!
                   ? {
                     ...val,
                     events: name === "add"
-                      ? [
-                        ...new Set([...val.events, +<string> event.value]),
-                      ]
+                      ? [...new Set([...val.events, +<string> event.value])]
                       : val.events.filter((d) => d !== +<string> event.value),
                   }
                   : val
@@ -320,9 +318,7 @@ export const commands = new Proxy<{
                   ? {
                     ...val,
                     events: name === "add"
-                      ? [
-                        ...new Set([...val.events, +<string> event.value]),
-                      ]
+                      ? [...new Set([...val.events, +<string> event.value])]
                       : val.events.filter((d) => d !== +<string> event.value),
                   }
                   : val
