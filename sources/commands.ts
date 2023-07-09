@@ -1,5 +1,4 @@
 import {
-  type CreateMessage,
   type DiscordInteraction,
   type DiscordInteractionResponse,
 } from "discordeno";
@@ -12,7 +11,6 @@ import {
   NFTResponse,
 } from "./types.ts";
 import { getPastEvents } from "./methods.ts";
-import { poll } from "./utils.ts";
 
 export const kv = await Deno.openKv();
 
@@ -24,46 +22,9 @@ export const commands = new Proxy<{
     | Promise<DiscordInteractionResponse["data"]>;
 }>(
   {
-    hello: async () => {
-      const data = await poll();
-
-      for (const { guild_id, watching } of data) {
-        for (const { address, channel_id, events } of watching) {
-          const history = await getPastEvents(
-            address,
-            events.includes(EventTypes.ApprovalForAll)
-              ? AbiType.XRC_721
-              : AbiType.XRC_20,
-            events.includes(EventTypes.All)
-              ? ["Transfer", "Approval", "ApprovalForAll"]
-              : events.map((x) =>
-                ["Transfer", "Approval", "ApprovalForAll"][x]
-              ),
-            300 / 86400,
-          );
-          // TODO(jabolo): filter if any event has happened here
-          fetch(
-            `https://discord.com/api/v10/channels/${channel_id}/messages`,
-            {
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bot ${Deno.env.get("DISCORD_TOKEN")}`,
-              },
-              method: "POST",
-              body: JSON.stringify(
-                {
-                  content: emojis.check +
-                    ` Sent to ${guild_id}\n\`\`\`json\n${
-                      JSON.stringify(history, null, 2)
-                    }\`\`\``,
-                } satisfies CreateMessage,
-              ),
-            },
-          );
-        }
-      }
-
-      return { content: `${emojis.check} Sent correctly.` };
+    hello: ({ data }) => {
+      const [{ value: name }] = data?.options!;
+      return { content: emojis.check + ` Hello ${name}!` };
     },
     follow: async ({ data, channel_id, guild_id }) => {
       const [action, address] = data?.options!;
