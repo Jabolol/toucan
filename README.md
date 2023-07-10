@@ -14,7 +14,7 @@
 > 
 > **1st place** in the
 > [`Social Media Crypto Bot`](https://ethbarcelona.devfolio.co/projects?prizes=d6e7e273ff394578a2a409b924ebab9e&show_winners=false)
-> category generously sponsored by [`XinFin`](https://www.xinfin.org/) at the [`Ethereum Barcelona`](http://ethbarcelona.devfolio.co/) Hackathon
+> category generously sponsored by [`XinFin`](https://www.xinfin.org/)
 
 ## commands
 
