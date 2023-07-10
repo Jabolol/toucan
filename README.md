@@ -9,12 +9,12 @@
 - NFT `explorer` with metadata viewer.
 - Blockchain data export to [`pastebin`](https://pastebin.com/).
 - Informative event quantity `plots` for contract analysis.
-- Ethereum Barcelona 2023 [`hackathon`](https://ethbarcelona.devfolio.co/)
-  winner.
 
-Achieved the **1st place** in the
-[`Social Media Crypto Bot`](https://ethbarcelona.devfolio.co/projects?prizes=d6e7e273ff394578a2a409b924ebab9e&show_winners=false)
-category generously sponsored by [`XinFin`](https://www.xinfin.org/).
+> **Note**
+> 
+> **1st place** in the
+> [`Social Media Crypto Bot`](https://ethbarcelona.devfolio.co/projects?prizes=d6e7e273ff394578a2a409b924ebab9e&show_winners=false)
+> category generously sponsored by [`XinFin`](https://www.xinfin.org/) at the [`Ethereum Barcelona`](http://ethbarcelona.devfolio.co/) Hackathon
 
 ## commands
 
