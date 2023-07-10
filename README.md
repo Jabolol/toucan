@@ -4,7 +4,7 @@
 
 **Token Toucan**, the all in one XDC notification bot for Discord.
 
-- Real-time event tracking for `XRC-21` and `XRC-721` contracts.
+- Real-time event tracking for `XRC-20` and `XRC-721` contracts.
 - Customizable contract `configuration` with real-time notifications.
 - NFT `explorer` with metadata viewer.
 - Blockchain data export to [`pastebin`](https://pastebin.com/).
@@ -97,7 +97,7 @@ The `plot` command generates a plot of the specified type for the specified
 address in the current Discord channel. The plot is generated for the specified
 number of days in retrospect.
 
-> **Warning** You must choose the appropiate type for the address: `XRC-21` or
+> **Warning** You must choose the appropiate type for the address: `XRC-20` or
 > `XRC-721`.
 
 #### export
