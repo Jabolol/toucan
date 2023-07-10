@@ -20,7 +20,6 @@ import {
 import { DEFAULT_ABI_XRC20, DEFAULT_ABI_XRC721, json } from "./misc.ts";
 import { getPastEvents } from "./methods.ts";
 import { kv } from "./commands.ts";
-import { render } from "resvg";
 
 export const getAbi = async (
   address: string,
@@ -155,7 +154,7 @@ export const createChart = (
     data.map(({ blockNumber }) => blockNumber),
   );
 
-  return render(makeChart({
+  return makeChart({
     type: "line",
     data: {
       labels: Array.from({ length: days }, (_, i) => "" + (i + 1)),
@@ -172,7 +171,7 @@ export const createChart = (
     options: {
       devicePixelRatio: 1,
     },
-  }));
+  });
 };
 
 export const chart = async (url: URL) => {
@@ -197,7 +196,7 @@ export const chart = async (url: URL) => {
   }
 
   return new Response(
-    await createChart(
+    createChart(
       await getPastEvents(
         address,
         +type,
@@ -211,7 +210,7 @@ export const chart = async (url: URL) => {
       +days,
     ),
     {
-      headers: { "Content-Type": "image/png" },
+      headers: { "Content-Type": "image/svg+xml" },
     },
   );
 };
