@@ -16,6 +16,8 @@
 > [`Social Media Crypto Bot`](https://ethbarcelona.devfolio.co/projects?prizes=d6e7e273ff394578a2a409b924ebab9e&show_winners=false)
 > category generously sponsored by [`XinFin`](https://www.xinfin.org/)
 
+Wallet address: `0xE210058ca7710330ad56Cf38c69F516b8D325701`
+
 ## commands
 
 The bot currently supports the following `commands`, future development is
