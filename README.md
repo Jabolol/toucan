@@ -2,6 +2,12 @@
 
 <img align="right" src="./assets/tokentoucan.png" style="border-radius: 10px;" height="150px" alt="a lunarpunk toucan" />
 
+> **Note**
+> 
+> **1st place** in the
+> [`Social Media Crypto Bot`](https://ethbarcelona.devfolio.co/projects?prizes=d6e7e273ff394578a2a409b924ebab9e&show_winners=false)
+> category at **ETH Barcelona**, generously sponsored by [`XinFin`](https://www.xinfin.org/)
+
 **Token Toucan**, the all in one XDC notification bot for Discord.
 
 - Real-time event tracking for `XRC-20` and `XRC-721` contracts.
@@ -9,14 +15,6 @@
 - NFT `explorer` with metadata viewer.
 - Blockchain data export to [`pastebin`](https://pastebin.com/).
 - Informative event quantity `plots` for contract analysis.
-
-> **Note**
-> 
-> **1st place** in the
-> [`Social Media Crypto Bot`](https://ethbarcelona.devfolio.co/projects?prizes=d6e7e273ff394578a2a409b924ebab9e&show_winners=false)
-> category generously sponsored by [`XinFin`](https://www.xinfin.org/)
-
-Wallet address: `0xE210058ca7710330ad56Cf38c69F516b8D325701`
 
 ## commands
 
